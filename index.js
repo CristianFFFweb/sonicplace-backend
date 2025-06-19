@@ -30,7 +30,7 @@ app.get('/probar-bd', async (req, res) => {
     });
   } catch (error) {
     console.error('❌ Error al consultar Supabase:', error);
-    res.status(500).json({ error: 'Error al conectar con la base de datos' });
+    res.status(500).json({ error: 'Error al conectar con la base de datos', detalle: error.message });
   }
 });
 
