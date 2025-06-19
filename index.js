@@ -21,7 +21,18 @@ app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api', DestacadosOfertasRoutes);
 app.use('/api/busqueda', busquedaRoutes);
-
+app.get('/probar-bd', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM users LIMIT 1');
+    res.json({
+      mensaje: 'Conexión a Supabase exitosa 🎉',
+      primerUsuario: result.rows[0] || 'No hay usuarios en la tabla',
+    });
+  } catch (error) {
+    console.error('❌ Error al consultar Supabase:', error);
+    res.status(500).json({ error: 'Error al conectar con la base de datos' });
+  }
+});
 
 app.get('/', (req, res) => {
   res.send('✅ SonicPlace backend funcionando desde Render');
