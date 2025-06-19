@@ -23,7 +23,9 @@ app.use('/api', DestacadosOfertasRoutes);
 app.use('/api/busqueda', busquedaRoutes);
 
 
-
+app.get('/', (req, res) => {
+  res.send('✅ SonicPlace backend funcionando desde Render');
+});
 
 module.exports = app; // 
 
