@@ -2,14 +2,31 @@ const pool = require('../config/db');
 const path = require('path');
 const upload = require('../middlewares/upload');
 
-const getAllProducts = async (req, res) => {
+/* const getAllProducts = async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM products');
     res.json(result.rows);
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener productos' });
   }
+}; */
+
+const getAllProducts = async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        products.*, 
+        users.fullname AS publicado_por
+      FROM products
+      LEFT JOIN users ON products.user_id = users.id
+    `);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error en getAllProducts:', error);
+    res.status(500).json({ error: 'Error al obtener productos' });
+  }
 };
+
 
 
 const getProductById = async (req, res) => {
