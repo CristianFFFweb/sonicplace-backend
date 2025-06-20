@@ -9,7 +9,7 @@ const upload = require('../middlewares/upload');
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener productos' });
   }
-}; */
+}; */ //lalala
 
 const getAllProducts = async (req, res) => {
   try {
