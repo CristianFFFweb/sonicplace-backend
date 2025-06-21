@@ -2,16 +2,7 @@ const pool = require('../config/db');
 const path = require('path');
 const upload = require('../middlewares/upload');
 
- /* const getAllProducts = async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM products');
-    res.json(result.rows);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener productos' });
-  }
-}; 
-
- */
+ 
 const getAllProducts = async (req, res) => {
   try {
     const result = await pool.query(`
@@ -102,6 +93,33 @@ const deleteProduct = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar producto' });
   }
 };
+const getProductsByUserId = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const result = await pool.query(
+      `SELECT products.*, users.fullname AS publicado_por 
+       FROM products 
+       JOIN users ON products.user_id = users.id 
+       WHERE users.id = $1`,
+      [userId]
+    );
+    res.json(result.rows);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener productos del usuario' });
+  }
+};
+
+const deleteUserAndProducts = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query('DELETE FROM products WHERE user_id = $1', [id]);
+    await pool.query('DELETE FROM users WHERE id = $1', [id]);
+    res.json({ message: 'Usuario y publicaciones eliminadas' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar usuario' });
+  }
+};
+
 
 
 
@@ -110,5 +128,7 @@ module.exports = {
   getProductById,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getProductsByUserId,
+  deleteUserAndProducts
 };

@@ -149,6 +149,26 @@ const eliminarPublicacion = async (req, res) => {
   }
 };
 
+const deleteOferta = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query('DELETE FROM ofertas WHERE id = $1', [id]);
+    res.json({ message: 'Oferta eliminada' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar oferta' });
+  }
+};
+
+const deleteDestacado = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query('DELETE FROM destacados WHERE id = $1', [id]);
+    res.json({ message: 'Destacado eliminado' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar destacado' });
+  }
+};
+
 module.exports = {
   getDestacados,
   getOfertas,
@@ -158,4 +178,6 @@ module.exports = {
   updateOfertas,
   crearPublicacion,
   eliminarPublicacion,
+  deleteOferta,
+  deleteDestacado
 };

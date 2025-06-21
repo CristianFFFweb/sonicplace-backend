@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { getDestacados, getOfertas, getDestacadosById, getOfertasById, updateDestacados, updateOfertas, crearPublicacion, eliminarPublicacion } = require('../controllers/DestacadosOfertasController');
+const { getDestacados, getOfertas, getDestacadosById, getOfertasById, updateDestacados, updateOfertas, crearPublicacion, eliminarPublicacion, deleteOferta, deleteDestacado } = require('../controllers/DestacadosOfertasController');
 const verifyToken = require('../middlewares/authMiddleware');
 const isAdmin = require('../middlewares/isAdmin');
 const uploadPorTipo = require('../middlewares/uploadPorTipo');
@@ -16,5 +16,7 @@ router.get('/destacados/:id', getDestacadosById);
 router.get('/ofertas/:id', getOfertasById);
 router.patch('/destacados/:id', updateDestacados);
 router.patch('/ofertas/:id', updateOfertas);
+router.delete('/ofertas/:id', deleteOferta);
+router.delete('/destacados/:id', deleteDestacado);
 
 module.exports = router;
