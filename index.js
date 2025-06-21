@@ -7,7 +7,7 @@ const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const DestacadosOfertasRoutes = require('./routes/DestacadosOfertasRoutes');
 const busquedaRoutes = require('./routes/busquedaRoutes');
-
+const adminRoutes = require('./routes/adminRoutes');
 const app = express();
 const path = require('path');
 
@@ -16,6 +16,8 @@ app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use('/destacados', express.static(path.join(__dirname, 'public/destacados')));
 app.use('/ofertas', express.static(path.join(__dirname, 'public/ofertas')));
+app.use('api/admin', adminRoutes); // Rutas de administración
+
 
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
